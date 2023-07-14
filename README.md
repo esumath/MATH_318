@@ -1,5 +1,4 @@
-## Structure of the repository
-
+## Math 318: Exploratory Data Analysis with R – Fall 2022
 
 The folder Cheatsheet stores some R and SQL cheat sheets.
 
