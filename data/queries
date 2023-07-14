@@ -1,0 +1,147 @@
+SELECT * FROM surveys;
+SELECT * FROM surveys LIMIT 10;
+SELECT sex, hindfoot_length FROM surveys;
+SELECT DISTINCT sex  FROM surveys;
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE weight <= 5;
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE weight >= 5 AND weight <= 6;
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE weight <= 5 AND sex='M';
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE NOT sex='F';
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE weight is NULL;
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE weight is NOT NULL;
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE species_id='DM' OR species_id='DO';
+
+SELECT species_id, sex, hindfoot_length, weight 
+FROM surveys
+WHERE (species_id='DM' OR species_id='DO') AND sex='F';
+
+
+SELECT *
+INTO surveys_weight
+FROM surveys
+WHERE weight is NOT NULL AND hindfoot_length is NOT NULL;
+
+SELECT * FROM surveys
+ORDER BY weight ASC;
+
+CREATE DATABASE Database2;
+DROP DATABASE IF EXISTS Database2;
+
+SELECT species_id, sex, avg(hindfoot_length), avg(weight)
+FROM surveys
+GROUP BY species_id, sex;
+
+SELECT  min(weight) as min_weight, max(weight), count(weight), sum(weight) 
+FROM surveys;
+
+SELECT  corr(hindfoot_length, weight) 
+FROM surveys;
+
+ALTER TABLE surveys
+ADD tail_length integer;
+
+UPDATE surveys
+SET sex = 'F', weight= 30
+WHERE record_id = 1;
+
+select * from surveys
+where record_id = 1;
+
+DELETE FROM surveys
+WHERE record_id = 1;
+
+select * from surveys
+where record_id = 1;
+
+INSERT INTO surveys (record_id, sex, hindfoot_length, weight)
+VALUES (1, 'F', 34, 40);
+
+select * from surveys
+where record_id = 1;
+
+CREATE INDEX idx_year
+ON surveys (year);
+
+CREATE INDEX idx_time
+ON surveys (month, day, year);
+
+DROP INDEX idx_year;
+DROP INDEX idx_time;
+
+EXPLAIN ANALYZE SELECT * 
+FROM surveys 
+WHERE month=7 AND day=16 AND year=1977;
+
+SELECT DISTINCT species.species
+FROM species, surveys
+WHERE species.species_id = surveys.species_id
+AND surveys.plot_id=2;
+
+SELECT *
+FROM species, surveys
+WHERE species.species_id = surveys.species_id
+AND species.species = 'harrisi'
+AND surveys.plot_id=2;
+
+SELECT *
+FROM species, surveys
+WHERE species.species_id = surveys.species_id
+AND species.genus='Baiomys'
+AND surveys.plot_id=2;
+
+SELECT *
+FROM species, surveys, plots
+WHERE species.species_id = surveys.species_id
+AND surveys.plot_id = plots.plot_id
+AND species.species = 'harrisi'
+AND surveys.plot_id=2;
+
+SELECT *
+FROM species 
+JOIN surveys
+ON species.species_id = surveys.species_id
+WHERE plot_id=2;
+
+SELECT *
+FROM surveys  
+LEFT JOIN species
+ON surveys.species_id = species.species_id
+WHERE plot_id=2;
+
+
+SELECT *
+FROM species  
+RIGHT JOIN surveys
+ON species.species_id = surveys.species_id
+WHERE plot_id=2;
+
+SELECT *
+FROM surveys  
+FULL JOIN species
+ON species.species_id = surveys.species_id
+WHERE plot_id=2;
+
+SELECT *
+FROM species, plots;
+
+SELECT *
+FROM surveys_weight;
